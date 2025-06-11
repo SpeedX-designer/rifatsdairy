@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheeseburger - FoodExpress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1C75BC, #00AEEF);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+		/* Navigation */
+      .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 60px;
+      background-color: #000;
+    }
+
+    /* Header / Logo Section */
+    header {
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    header img {
+      width: 140px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,0.3));
+      animation: floatUpDown 4s ease-in-out infinite;
+    }
+
+    header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 3.6rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00bbffaa;
+      user-select: none;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      color: #b3e1ffcc;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 8px #0099d9cc;
+      user-select: none;
+    }
+      @keyframes floatUpDown {
+      0%, 100% { transform: translateY(0);}
+      50% { transform: translateY(-15px);}
+    }
+
+        /* Product Section */
+        .product-section {
+            display: flex;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
+            border: 2.7px solid rgba(255,255,255,0.2);
+            background-color: (255,255,255,0.12);
+             box-shadow: 0 8px 40px rgba(0, 119, 255, 0.2);
+      backdrop-filter: blur(15px);
+            border-radius: 12px;
+			 transition: transform 0.3s ease;
+            animation: popUp 2s ease;      
+        }
+		@keyframes popUp {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .product-image {
+            flex: 1;
+            padding-right: 20px;
+        }
+        .product-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px #0079b3 ;
+        }
+        .product-details {
+            flex: 1;
+            text-align: left;
+        }
+        .product-details h2 {
+            font-size: 2.5rem;
+            color: #FFF;
+            margin-bottom: 15px;
+        }
+        .product-details p {
+            font-size: 1.2rem;
+            color: #d3d3d3;
+            margin-bottom: 15px;
+        }
+        .product-details .price {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .product-details input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: #ffffffee;
+            color: #555;
+        }
+
+        /* Order Now Button */
+        .order-now-btn {
+           margin-top: 25px;
+      display: inline-block;
+      background: #0099d9;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      padding: 30px 50px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 6px 20px #0080c7cc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+        }
+        .order-now-btn:hover {
+            background: #00c3ff;
+      box-shadow: 0 10px 25px #00b2ffcc;
+      transform: scale(1.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+            padding-top: 60px; /* Location of the box */
+            opacity: 0; /* Hidden by default */
+         transition: transform 0.3s ease;
+            animation: popUp 0.3s ease;    
+        }
+		        @keyframes popUp {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal.show {
+            display: block; /* Show modal */
+            opacity: 1; /* Fade in */
+        }
+        .modal-content {
+             border: 2.7px solid rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.12);
+             box-shadow: 0 8px 40px rgba(0, 119, 255, 0.2);
+      backdrop-filter: blur(15px);
+            border-radius: 12px;
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+           
+            width: 80%; /* Could be more or less, depending on screen size */
+           
+        }
+        .user-info-form input {
+           width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            color:#0079b3 ;
+         }
+        .close {
+            color: #0079b3;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+           
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* User Info Form */
+        .user-info-form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        t,
+        .user-info-form select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+              border: 2.7px solid rgba(255,255,255,0.2);
+            background-color: (255,255,255,0.12);
+             box-shadow: 0 8px 40px rgba(0, 119, 255, 0.2);
+      backdrop-filter: blur(15px);
+            border-radius: 12px;
+        }
+
+        /* Success Notification Styles */
+        .notification {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1002; /* Sit on top */
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+             border: 2.7px solid rgba(255,255,255,0.2);
+            background-color: (255,255,255,0.12);
+             box-shadow: 0 8px 40px rgba(0, 119, 255, 0.2);
+      backdrop-filter: blur(15px);
+            border-radius: 12px;
+            width: 300px;
+            text-align: center;
+            animation: fadeInOut 3s forwards; /* Fade in and out effect */
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+		/* Success Confirmation Modal Styles */
+#confirmationModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1002; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+    padding-top: 60px; /* Location of the box */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out; /* Smooth transition for fade effect */
+}
+
+#confirmationModal.show {
+    display: block; /* Show the modal */
+    opacity: 1; /* Fade in the modal */
+}
+
+#confirmationModal .modal-content {
+     border: 2.7px solid rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.12);
+             box-shadow: 0 8px 40px rgba(0, 119, 255, 0.2);
+      backdrop-filter: blur(15px);
+            border-radius: 12px;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 30px;
+    border-radius: 12px; /* Rounded corners */
+    width: 70%; /* Responsive width */
+   
+    max-width: 600px; /* Max width for larger screens */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Drop shadow for depth */
+    text-align: center; /* Center text */
+    transform: scale(0.8); /* Initial scale for animation */
+    transition: transform 0.3s ease-in-out; /* Smooth scale animation */
+    animation: modalScale 0.3s forwards; /* Animation to scale modal */
+}
+
+@keyframes modalScale {
+    0% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#confirmationModal .modal-content h3 {
+    color: #0079b3; /* Orange color for heading */
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+#confirmationModal .modal-content p {
+    color: #fff; /* Light gray text */
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#confirmationModal .modal-content .order-now-btn {
+    background-color: #0079b3; /* Bright button */
+    color: #fff; /* Dark text */
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#confirmationModal .modal-content .order-now-btn:hover {
+    background-color: #006a9b; /* Darker orange on hover */
+}
+
+#confirmationModal .close {
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#confirmationModal .close:hover {
+    color: #0079b3; /* Orange hover for close button */
+}
+
+        
+		@media (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Stack logo and nav vertically */
+        align-items: center; /* Center align items */
+    }
+
+    .logo {
+        margin-bottom: 10px; /* Space between logo and nav */
+        font-size: 1.5rem; /* Slightly smaller logo on mobile */
+    }
+
+    nav ul {
+        display: flex; /* Keep it horizontal */
+        flex-direction: row; /* Horizontal alignment */
+        list-style: none; /* Remove bullet points */
+        justify-content: center; /* Center the nav items */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+        width: auto; /* Adjust width */
+    }
+
+    nav ul li {
+        margin: 0 10px; /* Spacing between items */
+    }
+
+    .product-section {
+        flex-direction: column; /* Stack image and details vertically */
+        padding: 20px; /* Adjust padding */
+    }
+
+    .product-image {
+        padding-right: 0; /* Remove right padding */
+        margin-bottom: 20px; /* Add space between image and details */
+    }
+
+    .product-details {
+        text-align: center; /* Center align text */
+    }
+
+    .product-details h2 {
+        font-size: 2rem; /* Smaller title on mobile */
+    }
+
+    .product-details p {
+        font-size: 1rem; /* Smaller paragraph text */
+    }
+
+    .product-details .price {
+        font-size: 1.5rem; /* Smaller price text */
+    }
+
+    .order-now-btn {
+        width: 100%; /* Full width button */
+    }
+
+    .modal-content {
+        width: 90%; /* Full width modal on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    nav .logo {
+        font-size: 1.2rem; /* Smaller logo on extra small devices */
+    }
+
+    .product-details h2 {
+        font-size: 1.8rem; /* Smaller title */
+    }
+
+    .product-details p {
+        font-size: 0.9rem; /* Smaller paragraph text */
+    }
+
+    .product-details .price {
+        font-size: 1.2rem; /* Smaller price text */
+    }
+}
+ .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      animation: rise 15s linear infinite;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 6px #00b2ffcc);
+    }
+a{
+  text-decoration: none;
+}
+    /* Different sizes and positions for bubbles */
+    .bubble:nth-child(1) {
+      width: 80px; height: 80px;
+      left: 5%;
+      animation-delay: 0s;
+    }
+    .bubble:nth-child(2) {
+      width: 50px; height: 50px;
+      left: 20%;
+      animation-delay: 3s;
+      animation-duration: 12s;
+    }
+    .bubble:nth-child(3) {
+      width: 100px; height: 100px;
+      left: 40%;
+      animation-delay: 7s;
+      animation-duration: 18s;
+    }
+    .bubble:nth-child(4) {
+      width: 60px; height: 60px;
+      left: 65%;
+      animation-delay: 2s;
+      animation-duration: 16s;
+    }
+    .bubble:nth-child(5) {
+      width: 90px; height: 90px;
+      left: 80%;
+      animation-delay: 5s;
+      animation-duration: 14s;
+    }
+
+    @keyframes rise {
+      0% {
+        bottom: -100px;
+        opacity: 0.8;
+        transform: translateX(0);
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        bottom: 110vh;
+        opacity: 0;
+        transform: translateX(40px);
+      }
+    }
+    </style>
+</head>
+<body>
+    <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+     <!-- Logo Section -->
+ <header>
+    <img src="logo.png" alt="PureFresh Milk Logo" />
+    <h1>Rifat's Dairy Farm</h1>
+    <p>Farm-Fresh. Nutritious. Delicious.</p>
+  
+  </header>
+
+    <!-- Product Section -->
+    <section class="product-section">
+        <div class="product-image">
+            <img src="vegan.jpeg" alt="Cheeseburger">
+        </div>
+        <div class="product-details">
+            <h2>Vegan Milk</h2>
+            <p>Our Vegan Milk is a smooth, dairy-free alternative made from high-quality plant sources. Lactose-free, cholesterol-free, and full of flavor — ideal for vegans, those with lactose intolerance, or anyone seeking a clean lifestyle.
+
+
+</p>
+            <p class="price"> ৳ 69.69</p>
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1">
+            <button class="order-now-btn" onclick="showModal()">Order Now</button>
+        </div>
+    </section>
+
+    <!-- Modal for User Info Form -->
+    <div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Enter Your Information</h3>
+        <div class="user-info-form">
+           
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Your Name" name="name" required>
+            <label for="phone">Phone Number:</label>
+            <input type="number" id="phone" placeholder="Your Phone Number" name="phone" required>
+            <label for="adr">Address:</label>
+            <input type="text" id="adr" placeholder="Your Address" name="address" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Your Email" name="email" required>
+            <label for="payment">Payment Method:</label>
+            <input type="text"  id="payment" name="payment" value="Cash On Delivery" readonly>
+			 <label for="product">Product Name:</label>
+            <input type="text" id="product" value="Vegan Milk" name="product" readonly>
+            <button class="order-now-btn" onclick="submitOrder()">Submit Order</button>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+  <!-- Success Confirmation Modal -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeConfirmationModal()">&times;</span>
+        <h3>Order Placed Successfully!</h3>
+        <p><strong>Name:</strong> <span id="confirmName"></span></p>
+        <p><strong>Phone:</strong> <span id="confirmPhone"></span></p>
+        <p><strong>Address:</strong> <span id="confirmAddress"></span></p>
+        <p><strong>Email:</strong> <span id="confirmEmail"></span></p>
+        <p><strong>Total Amount:</strong> ৳<span id="confirmAmount"></span></p>
+
+        <!-- Back to Home Button -->
+        <button class="order-now-btn" onclick="goBackHome()">Back to Home</button>
+    </div>
+</div>
+ 
+    <script>
+          function showModal() {
+            const modal = document.getElementById('userModal');
+            modal.classList.add('show'); // Add class to show modal
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('userModal');
+            modal.classList.remove('show'); // Remove class to hide modal
+        }
+
+   function submitOrder() {
+        // Get user inputs
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const address = document.getElementById('adr').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const payment = document.getElementById('payment').value;
+        const quantity = document.getElementById('quantity').value.trim();
+        const product = document.getElementById('product').value.trim();
+
+        // Validate inputs
+        const phoneRegex = /^(?:\+8801|01)[3-9]\d{8}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!name || !phone || !address || !email || !payment || !quantity) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        if (!phoneRegex.test(phone)) {
+            alert('Please enter a valid phone number.');
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Close the modal
+        closeModal();
+
+        // Calculate total amount (assuming $8.99 per item)
+        const pricePerItem = 69.69;
+        const totalAmount = (quantity * pricePerItem).toFixed(2);
+
+        // Prepare data to send
+        const formData = {
+            name: name,
+            phone: phone,
+            address: address,
+            email: email,
+            payment: payment,
+            quantity: quantity,
+            product: product
+        };
+
+        // Send data to Google Sheets
+        fetch('https://script.google.com/macros/s/AKfycbzcSbV0_K-oUvCW7E-iRQc0z8W6tePo3YY8ydhlXjJZnTHHh6FAz1ecDJJb8LFf683p/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(formData)
+        })
+        .then(response => {
+            if (response.ok) {
+                // Populate the confirmation modal with user details and total amount
+                document.getElementById('confirmName').textContent = name;
+                document.getElementById('confirmPhone').textContent = phone;
+                document.getElementById('confirmAddress').textContent = address;
+                document.getElementById('confirmEmail').textContent = email;
+                document.getElementById('confirmAmount').textContent = totalAmount;
+
+                // Show the confirmation modal
+                showConfirmationModal();
+
+            } else {
+                alert('There was an error submitting your order. Please try again.');
+            }
+        })
+        .catch(error => {
+            alert('There was an error submitting your order. Please try again.');
+            console.error('Error:', error);
+        });
+    }
+
+    function showConfirmationModal() {
+        const modal = document.getElementById('confirmationModal');
+        modal.classList.add('show'); // Add class to show modal
+    }
+
+    function closeConfirmationModal() {
+        const modal = document.getElementById('confirmationModal');
+        modal.classList.remove('show'); // Remove class to hide modal
+    }
+
+    function goBackHome() {
+        // Redirect to the home page
+        window.location.href = 'index.html';
+    }
+</script>
+
+
+
+    </script>
+</body>
+</html>
